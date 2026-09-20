@@ -6,8 +6,8 @@ import api from '../utils/axios';
 const App = () => {
   const hanldeLogin=async(token)=>{
     try {
-     const {data}= await api.post("/auth/login",token)
-     console.log(data)
+     const {data}= await api.post("/auth/login",{token})
+     console.log("what is this ",data)
     } catch (error) {
       console.log(error)
     }
