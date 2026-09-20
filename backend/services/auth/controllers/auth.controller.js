@@ -1,6 +1,7 @@
 import {getAuth} from "firebase-admin/auth"
 import { app } from "../config/firebase.js";
 import User from "../models/user.model.js";
+import redis from "../../../shared/redis/redis.js";
 export const login = async(req, res) => {
     try {
         const {token}=req.body;
@@ -14,6 +15,7 @@ export const login = async(req, res) => {
                 avatar:decoded.picture
             })
         }
+        redis
         const sessionID=crypto.randomUUID();
         res.cookie("session",sessionID,{
             httpOnly:true,
