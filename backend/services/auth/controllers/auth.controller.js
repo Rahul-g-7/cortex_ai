@@ -5,12 +5,12 @@ export const login = async(req, res) => {
     try {
         const {token}=req.body;
         const decoded=await getAuth(app).verifyIdToken(token)
-        const user=await User.findOne({firebase_uid:decoded.uid})
+        let user=await User.findOne({firebaseUid:decoded.uid})
         if (!user) {
             user=await User.create({
-                firebase_uid:decoded.uid,
+                firebaseUid:decoded.uid,
                 email:decoded.email,
-                display_name:decoded.name,
+                name:decoded.name,
                 avatar:decoded.picture
             })
         }
@@ -22,7 +22,9 @@ export const login = async(req, res) => {
             maxAge:7*24*60*60*1000,
         })
         return res.status(200).json({message:"Login successful",user})
+        
     }
+
     catch(error){
         console.log(error)
         return res.status(500).json({message:`login error ${error}`})

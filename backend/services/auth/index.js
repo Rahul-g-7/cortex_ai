@@ -9,12 +9,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8000;
 app.use(express.json());
-app.use(express.json());
 app.use(morgan("dev"));
-app.use(cookieParser)
+app.use(cookieParser())
 app.use("/", authRoutes);
 
-
+app.get("/",(req,res)=>{
+    res.send("hello from auth service")
+})
 
 app.listen(PORT, () => {
     console.log(`auth is running on port ${PORT}`);
