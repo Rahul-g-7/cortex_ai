@@ -9,7 +9,7 @@ const userSchema =new mongoose.Schema({
     email:String,
     avatar:String,
 },{
-    timestamps
+    timestamps:true
 })
 
 const User=mongoose.model("User",userSchema)
