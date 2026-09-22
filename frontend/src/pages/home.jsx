@@ -20,8 +20,10 @@ const Home = () => {
   console.log(data) 
   }
     return (
-        <div>
-            
+        <div className='h-screen flex bg-[#0d0f14] text-white overflow-hidden'>
+            <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm'>
+                <button onClick={googleLogin}>google login</button>
+            </div>
         </div>
     );
 }
