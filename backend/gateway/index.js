@@ -21,8 +21,8 @@ app.use(cors({
 app.get("/", (req, res) => {
     res.json({ message: "hello from gateway service" })
 })
-app.use("/auth",proxy(process.env.AUTH_SERVICE));
-app.get("/me",protect,getCurrentUser)
+app.use("/api/auth",proxy(process.env.AUTH_SERVICE));
+app.get("/api/me",protect,getCurrentUser)
 
 app.listen(PORT, () => {
     console.log(`Gateway is running on port ${PORT}`);

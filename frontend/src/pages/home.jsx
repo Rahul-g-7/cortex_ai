@@ -7,7 +7,7 @@ import { FcGoogle } from 'react-icons/fc'
 const Home = () => {
     const hanldeLogin=async(token)=>{
     try {
-     const {data}= await api.post("/auth/login",{token})
+     const {data}= await api.post("/api/auth/login",{token})
      console.log("what is this ",data)
     } catch (error) {
       console.log(error)
