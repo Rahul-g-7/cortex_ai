@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 import  protect  from "./middleware/auth.middleware.js";
 import  getCurrentUser  from "./controllers/user.controller.js";
+import { proxyWithHeader}  from "./utils/proxyWithHeader.js";
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -22,7 +23,7 @@ app.get("/", (req, res) => {
     res.json({ message: "hello from gateway service" })
 })
 app.use("/api/auth",proxy(process.env.AUTH_SERVICE));
-app.use("/api/chat",proxy(process.env.CHAT_SERVICE));
+app.use("/api/chat",proxyWithHeader(process.env.CHAT_SERVICE));
 app.get("/api/me",protect,getCurrentUser)
 
 app.listen(PORT, () => {
