@@ -5,7 +5,8 @@ import proxy from "express-http-proxy";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 dotenv.config();
-
+import  protect  from "./middleware/auth.middleware.js";
+import  getCurrentUser  from "./controllers/user.controller.js";
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
     res.json({ message: "hello from gateway service" })
 })
 app.use("/auth",proxy(process.env.AUTH_SERVICE));
+app.get("/me",protect,getCurrentUser)
 
 app.listen(PORT, () => {
     console.log(`Gateway is running on port ${PORT}`);
