@@ -1,3 +1,56 @@
+import Conversation from "../models/conversation.model.js";
+import Message from "../models/message.model.js";
 export const createConversation = async (req, res) => {
     try {
-        const { participants } = req.body;
+        const userId = req.headers['x-user-id'];
+        console.log("User ID from header:", userId);
+        const conversation = await chatService.createConversation(userId);
+        res.status(201).json(conversation);
+    } catch (error) {
+        console.error("Error creating conversation:", error);
+        res.status(500).json({ error: `Failed to create conversation ${error}` });
+    }
+}
+export const getConversations= async (req, res) => {
+    try {
+        const userId = req.headers['x-user-id'];
+        console.log("User ID from header:", userId);
+        const conversations = await Conversation.findOne({ userId: userId }).sort({updatedAt: -1});
+        res.status(200).json(conversations);
+    } catch (error) {
+        console.error("Error getting conversation:", error);
+        res.status(500).json({ error: `Failed to get conversation ${error}` });
+    }
+}
+export const updateConversation= async (req, res) => {
+    try {
+        const {id,title} = req.body;
+        const conversation= await Conversation.findByIdAndUpdate(id, { title });
+        res.status(200).json(conversation);
+    } catch (error) {
+        console.error("Error getting conversation:", error);
+        res.status(500).json({ error: `Failed to get conversation ${error}` });
+    }
+}
+export const saveMessage = async (req, res) => {
+    try {
+        const {conversationId, role, content} = req.body;
+        const Message = await Message.create({conversationId, role, content});
+        res.status(201).json(Message);
+    } catch (error) {
+        console.error("Error saving message:", error);
+        res.status(500).json({ error: `Failed to save message ${error}` });
+    }
+        
+}
+export const getMessage = async (req, res) => {
+    try {
+        const {conversationId} = req.body;
+        const Message = await Message.find({conversationId}).sort({updatedAt: -1});
+        res.status(200).json(Message).sort({createdAt: -1});;
+    } catch (error) {
+        console.error("Error fetching message:", error);
+        res.status(500).json({ error: `Failed to fetch message ${error}` });
+    }
+        
+}
