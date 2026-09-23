@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
     res.json({ message: "hello from gateway service" })
 })
 app.use("/api/auth",proxy(process.env.AUTH_SERVICE));
-app.use("/api/chat",proxyWithHeader(process.env.CHAT_SERVICE));
+app.use("/api/chat",protect,proxyWithHeader(process.env.CHAT_SERVICE));
 app.get("/api/me",protect,getCurrentUser)
 
 app.listen(PORT, () => {
