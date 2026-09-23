@@ -2,6 +2,7 @@ import React from 'react';
 import api from '../../utils/axios.js';
 import { signInWithPopup } from 'firebase/auth';
 import {auth,googleProvider} from '../../utils/firebase.js'
+import { FcGoogle } from 'react-icons/fc'
 
 const Home = () => {
     const hanldeLogin=async(token)=>{
@@ -22,7 +23,15 @@ const Home = () => {
     return (
         <div className='h-screen flex bg-[#0d0f14] text-white overflow-hidden'>
             <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm'>
-                <button onClick={googleLogin}>google login</button>
+                <div className='w-[340px] bg-[#13151c] border border-white rounded-2xl p-7 flex flex-col gap-5'>
+                    <div className='flex flex-col gap-1'>
+                        <h2 className='text-[17px] font-semibold text-slate-100 tracking-tight'>Welcome to CortexAI</h2>
+                        <p className=' text-[13px] text-slate-500'>Please login to continue</p>
+                        
+                    </div>
+                    <button onClick={googleLogin} className=' w-full  flex items-center justify-center gap-3 bg-linear-to-br from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-600 active:from-indigo-600 active:to-violet-800 border border-indigo-500/30 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all duration-150  text-white py-[11px] rounded-lg  cursor-pointer'>
+                        <FcGoogle size={15} className='text-white' /> Login with Google</button>
+                </div>
             </div>
         </div>
     );
