@@ -6,7 +6,7 @@ import { codingAgent } from "../agents/coding.agent.js";
 import { pdfAgent } from "../agents/pdf.agent.js";
 import { pptAgent } from "../agents/ppt.agent.js";
 import { searchAgent } from "../agents/search.agent.js";
-import { imageGenAgent } from "../agents/imageGen.agent.js";
+import { visionAgent } from "../agents/vision.agent.js";
 const workflow =new StateGraph(agentState)
 workflow.addNode("router",router)
 workflow.addNode("chat",chatAgent)\
@@ -14,4 +14,30 @@ workflow.addNode("coding",codingAgent)
 workflow.addNode("pdf",pdfAgent)
 workflow.addNode("ppt",pptAgent)
 workflow.addNode("search",searchAgent)
-workflow.addNode("imageGen",imageGenAgent)
+workflow.addNode("vision",visionAgent)
+workflow.addEdge("__start__","router")
+workflow.addConditionalEdges("router",(state)=>{
+  switch(state.agent){
+    case "chat":
+      return "chat";
+    case "coding":
+      return "coding";
+    case "pdf":
+      return "pdf";
+    case "ppt":
+      return "ppt";
+    case "search":
+      return "search";
+    case "vision":
+      return "vision";
+    default:
+      return "chat";
+  }
+},{
+  chat: "chat",
+  coding: "coding",
+  pdf: "pdf",
+  ppt: "ppt",
+  search: "search",
+  vision: "vision"
+});
