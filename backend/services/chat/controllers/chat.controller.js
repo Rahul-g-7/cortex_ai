@@ -4,7 +4,7 @@ export const createConversation = async (req, res) => {
     try {
         const userId = req.headers['x-user-id'];
         console.log("User ID from header:", userId);
-        const conversation = await chatService.createConversation(userId);
+        const conversation = await Conversation.create({ userId });
         res.status(201).json(conversation);
     } catch (error) {
         console.error("Error creating conversation:", error);
@@ -15,7 +15,7 @@ export const getConversations= async (req, res) => {
     try {
         const userId = req.headers['x-user-id'];
         console.log("User ID from header:", userId);
-        const conversations = await Conversation.findOne({ userId: userId }).sort({updatedAt: -1});
+        const conversations = await Conversation.find({ userId: userId }).sort({updatedAt: -1});
         res.status(200).json(conversations);
     } catch (error) {
         console.error("Error getting conversation:", error);
