@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser())
 app.get("/",(req,res)=>{
-    res.send("hello from auth agent service")
+    res.send("hello from agent service")
 })
 
 app.listen(PORT, () => {

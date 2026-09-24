@@ -12,7 +12,7 @@ app.use(morgan("dev"));
 app.use(cookieParser())
 app.use("/",router)
 app.get("/",(req,res)=>{
-    res.send("hello from auth chat service")
+    res.send("hello from chat service")
 })
 
 app.listen(PORT, () => {
