@@ -41,7 +41,7 @@ export const login = async(req, res) => {
 
 export const logout=async(req,res)=>{
     try {
-        const sessionID=req.cookie?.session
+        const sessionID=req.cookies?.session
         if (!sessionID){
             return res.status(400).json({message:"no session id"})
         }

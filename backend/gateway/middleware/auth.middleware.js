@@ -13,7 +13,7 @@ const protect=async(req,res,next)=>{
           next()
     }
     catch(err){
-      return res.status(500).json({message:"protect error ${err} "})
+      return res.status(500).json({message:`protect error ${err} `})
       
     }
   }
