@@ -15,6 +15,5 @@ export const chatAgent = async (state) => {
   return {
     ...state,
     aiResponse: response.content,
-    agent: "chat",
   };
 };
