@@ -35,8 +35,8 @@ export const updateConversation= async (req, res) => {
 export const saveMessage = async (req, res) => {
     try {
         const {conversationId, role, content} = req.body;
-        const Message = await Message.create({conversationId, role, content});
-        res.status(201).json(Message);
+        const message = await Message.create({conversationId, role, content});
+        res.status(201).json(message);
     } catch (error) {
         console.error("Error saving message:", error);
         res.status(500).json({ error: `Failed to save message ${error}` });
@@ -45,8 +45,8 @@ export const saveMessage = async (req, res) => {
 }
 export const getMessages = async (req, res) => {
     try {
-        const Message = await Message.find({conversationId:req.params.conversationId}).sort({createdAt: -1});
-        res.status(200).json(Message);
+        const message = await Message.find({conversationId:req.params.conversationId}).sort({createdAt: -1});
+        res.status(200).json(message);
     } catch (error) {
         console.error("Error fetching message:", error);
         res.status(500).json({ error: `Failed to fetch message ${error}` });
