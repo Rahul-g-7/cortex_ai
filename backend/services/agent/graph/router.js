@@ -34,12 +34,14 @@ export const router = async (state) => {
   API dessign.
 
   pdf:
-  Questions about generate PDFs
-  or document context.
+  Questions about generate PDFs 
+  or create/generate pdf
+  or document context .
 
   ppt:
-  Questions about generate PPTs
-  or ppt context.
+  Questions about generate PPTs 
+  or create/generate ppt
+  or ppt context .
 
   vision:
   generate image,
@@ -61,7 +63,7 @@ export const router = async (state) => {
   const response=await llm.call(prompt)
   return {
     ...state,
-    agent:response
+    agent:response.content.trim().toLowerCase()
   }
-  
+
 }
