@@ -1,10 +1,9 @@
 import express, { Router } from "express";
-import dotenv from "dotenv";
+import "dotenv/config";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
 import cookieParser from "cookie-parser";
 import router from "./routes/agent.route.js";
-dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8000;
 app.use(express.json());

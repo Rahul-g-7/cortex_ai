@@ -1,4 +1,4 @@
-import { getModel } from "../llm.js";
+import { getModel } from "../config/llmModels.js";
 export const router = async (state) => {
   const llm=await getModel("router")
   const prompt=`You are an intelligent agent router for a multi-agent AI system.

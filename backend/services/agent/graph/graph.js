@@ -7,12 +7,12 @@ import { pdfAgent } from "../agents/pdf.agent.js";
 import { pptAgent } from "../agents/ppt.agent.js";
 import { searchAgent } from "../agents/search.agent.js";
 import { visionAgent } from "../agents/vision.agent.js";
-const workflow =new StateGraph(agentState)
-workflow.addNode("router",router)
-workflow.addNode("chat",chatAgent)\
-workflow.addNode("coding",codingAgent)
-workflow.addNode("pdf",pdfAgent)
-workflow.addNode("ppt",pptAgent)
+const workflow = new StateGraph(agentState)
+workflow.addNode("router", router)
+workflow.addNode("chat", chatAgent)
+workflow.addNode("coding", codingAgent)
+workflow.addNode("pdf", pdfAgent)
+workflow.addNode("ppt", pptAgent)
 workflow.addNode("search",searchAgent)
 workflow.addNode("vision",visionAgent)
 workflow.addEdge("__start__","router")
