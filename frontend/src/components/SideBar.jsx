@@ -112,7 +112,7 @@ const SideBar = () => {
                         </div>
                         
                     </div>) : (
-                        <button >
+                        <button className='w-full flex items-center justify-center gap-2 text-sm font-medium text-slate-200 bg-white/[0.05] border border-white/[0.08] rounded-xl py-[11px] cursor-pointer hover:bg-white[0.08] transition-colors duration-150'>
                             login
                         </button>
                     )}
