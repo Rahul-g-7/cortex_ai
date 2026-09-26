@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {PanelLeftIcon, PenSquare,Plus,MessageSquare,User} from 'lucide-react';
+import {PanelLeftIcon, PenSquare,Plus,MessageSquare,User,Coins,LogOut} from 'lucide-react';
 import { getConversation } from '../features/getConversaitons';
 import { useDispatch, useSelector } from 'react-redux';
 import {addConversation,setConversations,setSelectedConversation} from '../redux/conversationSlice';
@@ -8,7 +8,7 @@ import { setUserData } from '../redux/userSlice';
 const SideBar = () => {
     const [collapsed,setCollapse]=useState(false)
     const dispatch=useDispatch()
-    
+
     const {conversations,selectedConversation}=useSelector((state)=>state.conversation)
     const {userData}=useSelector((state)=>state.user)
     
@@ -81,18 +81,32 @@ const SideBar = () => {
 
                   <div className='mx-2.5 h-px bg-white/[0.5] my-2' />
                   <div className=''>
-                    {userData ? (<div className='flex items-center gap-2.5 cursor-pointer rounded-xl px-3 py-2.5 hover:bg-white/[0.05] transition-colors duration-150'>
+                    {userData ? (
+                        <div className='flex items-center gap-2.5 cursor-pointer rounded-xl px-3 py-2.5 hover:bg-white/[0.05] transition-colors duration-150'>
                         <div className='relative-shrink'>
                             {
                                 ((userData?.user?.avatar || userData?.avatar)  && !imageError)
                                 ?
-                                <img className='w-6 h-6 rounded-lg' src={userData?.user?.avatar ||userData?.avatar} alt="image" onError={()=>setImageError(true)} />
+                                <img className='w-9 h-9 rounded-[10px] object-cover border-2 border-indigo-500/25' src={userData?.user?.avatar ||userData?.avatar} alt="image" onError={()=>setImageError(true)} />
                                 :
-                               <div className='flex items-center justify-center h-6 w-6 shrink-0 rounded-lg bg-white/[0.07] text-slate-500'>
-                                <User />
+                               <div className='w-9 h-9 rounded-[10px] bg-white/[0.06] flex items-center justify-center'>
+                                <User size={15} className='text-slate-400'/>
                                </div>
                             }
                         </div>
+                        <div className='flex-1 min-w-0'> 
+                            <p className='text-[13px] font-semibold text-slate-100 truncate'>{userData?.user?.name ||"user"}</p>
+                            <p className='text-[11px] text-slate-600 mt-px'>{"Free plan"}</p>
+                        </div>
+                        <div className='flex gap-2'>
+                            <button className='flex items-center justify-center h-7 w-7 rounded-lg text-yellow-600 hover:text-slate-400 hover:bg-white/[0.07] transition-colors duration-150 bg-transparent border-none cursor-pointer'>
+                                <Coins size={18}/>
+                            </button>
+                            <button className='flex items-center justify-center h-7 w-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.07] transition-colors duration-150 bg-transparent border-none cursor-pointer'>
+                                <LogOut size={18}/>
+                            </button>
+                        </div>
+                        
                     </div>) : (
                         <button >
                             login
