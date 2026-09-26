@@ -1,7 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {PanelLeftIcon, PenSquare,Plus} from 'lucide-react';
+import { getConversation } from '../features/getConversaitons';
+import { useDispatch } from 'react-redux';
+import {addConversation} from '../redux/conversationSlice';
+import { createConversation } from '../features/createConversation';
 const SideBar = () => {
     const [collapsed,setCollapse]=useState(false)
+    const dispatch=useDispatch()
+    useEffect(()=>{
+        const getConv=async()=>{
+            const data=await getConversation()
+            dispatch(addConversation(data))
+        }
+        getConv()
+    },[])
+    const handleCreateConversation=async()=>{
+        const data=await createConversation()
+        dispatch(addConversation(data))
+    }
     return (
         <div className='fixed lg:static inset-y-0 left-0 z-50 w-[270px] h-screen shrink-0 bg-[#0d0f14] border-r border-white/[0.06]'>
             <div className='flex flex-col h-full'>
@@ -11,12 +27,12 @@ const SideBar = () => {
                     </div>
                     <span className='text-[15px] font-semibold text-slate-100 tracking-tight flex-1'>CortexAI</span>
                     <span className='text-[12px] font-medium text-indigo-400 border bg-indigo-500/10 border-indigo-500/30 px-2 py-0.5 rounded-full tracking-wide'>free</span>
-                    <button className='flex items-center justify-center h-7 w-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.07] transition-colors duration-150 bg-transparent border-none cursor-pointer'>
+                    <button className='flex items-center justify-center h-7 w-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.07] transition-colors duration-150 bg-transparent border-none cursor-pointer' onClick={handleCreateConversation}>
                         <PenSquare/>
                     </button>
                 </div>
                 <div className='px-4 pt-4 pb-1'>
-                    <button className='w-full flex items-center gap-2 justify-center rounded-xl text-white font-medium bg-linear-to-br from-indigo-500 to-violet-600 py-[10px] border-none hover:opacity-90 transition-opacity duration-150 cursor-pointer'>
+                    <button className='w-full flex items-center gap-2 justify-center rounded-xl text-white font-medium bg-linear-to-br from-indigo-500 to-violet-600 py-[10px] border-none hover:opacity-90 transition-opacity duration-150 cursor-pointer'onClick={handleCreateConversation}>
                         <Plus size={16}/>
                         New Chat 
                     </button>
