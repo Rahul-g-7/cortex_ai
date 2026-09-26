@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import {PanelLeftIcon, PenSquare,Plus} from 'lucide-react';
 import { getConversation } from '../features/getConversaitons';
-import { useDispatch } from 'react-redux';
-import {addConversation} from '../redux/conversationSlice';
-import { createConversation } from '../features/createConversation';
+import { useDispatch, useSelector } from 'react-redux';
+import {addConversation,setConversations} from '../redux/conversationSlice';
+import { createConversation } from '../features/createConversation'; 
 const SideBar = () => {
     const [collapsed,setCollapse]=useState(false)
     const dispatch=useDispatch()
+    const {conversations}=useSelector((state)=>state.conversation)
     useEffect(()=>{
         const getConv=async()=>{
             const data=await getConversation()
-            dispatch(addConversation(data))
+            dispatch(setConversations(data))
         }
         getConv()
     },[])
@@ -37,7 +38,25 @@ const SideBar = () => {
                         New Chat 
                     </button>
                 </div>
-                <div className=''></div>
+                <div >
+                    {conversations.length==0 ? 
+                        <div className='px-5 pt-4 pb-1.5 text-[13px] text-slate-600 font-semibold uppercase tracking-widest '>
+                            No recent conversations
+                        </div>
+                        :
+                        (
+                            <div className='px-5 pt-4 pb-1.5 text-[13px] text-slate-600 font-semibold uppercase tracking-widest '>
+                                
+                                recents
+                            </div>
+                        )
+                    }
+                    <div className='flex-1 overflow-y-auto px-2.5 pb-2 [scrollbar-width:none ] [&::-webkit-scrollbar]:hidden'>
+                        {conversations.map((conversation,i)=>(
+                            <div key={i}></div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );
