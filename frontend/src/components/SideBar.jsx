@@ -57,16 +57,22 @@ const SideBar = () => {
                             const isActive = selectedConversation?._id == conv?._id;
                             return (
                                 <div onClick={() => dispatch(setSelectedConversation(conv))} className={`flex items-center gap-2.5  cursor-pointer mb-0.5 px-3 py-2.5 rounded-[10px] border transition-colors duration-150 ${isActive ? "bg-indigo-500/10 border-indigo-500/[0.18]" : "bg-transparent border-transparent"}`}>
+                                    <div className={` flex items-center justify-center shrink-0 h-[28px] w-[28px] rounded-lg ${isActive ? "bg-indigo-500/10 text-indigo-400" : "bg-white/[0.05] text-slate-500"}`}>
+                                        <MessageSquare size={13}/>
+                                    </div>
                                     
-                                    <MessageSquare/>
-                                    <span>{conv?.title || "New Chat"}</span>
+                                    <span className={`text-[13xp] font-medium truncate ${isActive ? "text-slate-100" : "text-slate-300"}`}>{conv?.title || "New Chat"}</span>
                                  </div>   
                             )
 
                             })}
                     </div>
+                  <div className='mx-2.5 h-px bg-white/[0.4]'/>
+                   
                 </div>
+              
             </div>
+              
         </div>
     );
 }
