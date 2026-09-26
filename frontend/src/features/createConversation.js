@@ -7,5 +7,6 @@ export const createConversation =async ()=>{
 
     } catch (error) {
         console.log(error)
+        return []
     }
 }

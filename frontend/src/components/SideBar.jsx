@@ -1,25 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import {PanelLeftIcon, PenSquare,Plus,MessageSquare} from 'lucide-react';
+import {PanelLeftIcon, PenSquare,Plus,MessageSquare,User} from 'lucide-react';
 import { getConversation } from '../features/getConversaitons';
 import { useDispatch, useSelector } from 'react-redux';
 import {addConversation,setConversations,setSelectedConversation} from '../redux/conversationSlice';
 import { createConversation } from '../features/createConversation'; 
+import { setUserData } from '../redux/userSlice';
 const SideBar = () => {
     const [collapsed,setCollapse]=useState(false)
     const dispatch=useDispatch()
     
     const {conversations,selectedConversation}=useSelector((state)=>state.conversation)
-    useEffect(()=>{
-        const getConv=async()=>{
-            const data=await getConversation()
-            dispatch(setConversations(data))
-        }
-        getConv()
-    },[])
+    const {userData}=useSelector((state)=>state.user)
+    
+
+    useEffect(() => {
+    if (userData) {
+        const getConv = async () => {
+            const data = await getConversation();
+            dispatch(setConversations(data || []));
+        };
+        getConv();
+    }
+}, [userData]);
+
+
     const handleCreateConversation=async()=>{
         const data=await createConversation()
         dispatch(addConversation(data))
     }
+
+    const [imageError,setImageError]=useState(false)
+    
     return (
         <div className='fixed lg:static inset-y-0 left-0 z-50 w-[270px] h-screen shrink-0 bg-[#0d0f14] border-r border-white/[0.06]'>
             <div className='flex flex-col h-full'>
@@ -39,8 +50,8 @@ const SideBar = () => {
                         New Chat 
                     </button>
                 </div>
-                <div >
-                    {conversations.length==0 ? 
+                <div className='flex-1 flex flex-col min-h-0'>
+                    {conversations?.length==0 ? 
                         <div className='px-5 pt-4 pb-1.5 text-[13px] text-slate-600 font-semibold uppercase tracking-widest '>
                             No recent conversations
                         </div>
@@ -61,18 +72,38 @@ const SideBar = () => {
                                         <MessageSquare size={13}/>
                                     </div>
                                     
-                                    <span className={`text-[13xp] font-medium truncate ${isActive ? "text-slate-100" : "text-slate-300"}`}>{conv?.title || "New Chat"}</span>
+                                    <span className={`text-[13px] font-medium truncate ${isActive ? "text-slate-100" : "text-slate-300"}`}>{conv?.title || "New Chat"}</span>
                                  </div>   
                             )
 
                             })}
                     </div>
-                  <div className='mx-2.5 h-px bg-white/[0.4]'/>
+
+                  <div className='mx-2.5 h-px bg-white/[0.5] my-2' />
+                  <div className=''>
+                    {userData ? (<div className='flex items-center gap-2.5 cursor-pointer rounded-xl px-3 py-2.5 hover:bg-white/[0.05] transition-colors duration-150'>
+                        <div className='relative-shrink'>
+                            {
+                                ((userData?.user?.avatar || userData?.avatar)  && !imageError)
+                                ?
+                                <img className='w-6 h-6 rounded-lg' src={userData?.user?.avatar ||userData?.avatar} alt="image" onError={()=>setImageError(true)} />
+                                :
+                               <div className='flex items-center justify-center h-6 w-6 shrink-0 rounded-lg bg-white/[0.07] text-slate-500'>
+                                <User />
+                               </div>
+                            }
+                        </div>
+                    </div>) : (
+                        <button >
+                            login
+                        </button>
+                    )}
+                  </div>
                    
                 </div>
               
             </div>
-              
+                  
         </div>
     );
 }
