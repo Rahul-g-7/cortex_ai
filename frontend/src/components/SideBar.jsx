@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {addConversation,setConversations,setSelectedConversation} from '../redux/conversationSlice';
 import { createConversation } from '../features/createConversation'; 
 import { setUserData } from '../redux/userSlice';
+import logOut from '../features/logOut';
 const SideBar = () => {
     const [collapsed,setCollapse]=useState(false)
     const dispatch=useDispatch()
@@ -99,10 +100,13 @@ const SideBar = () => {
                             <p className='text-[11px] text-slate-600 mt-px'>{"Free plan"}</p>
                         </div>
                         <div className='flex gap-2'>
-                            <button className='flex items-center justify-center h-7 w-7 rounded-lg text-yellow-600 hover:text-slate-400 hover:bg-white/[0.07] transition-colors duration-150 bg-transparent border-none cursor-pointer'>
+                            <button className='flex items-center justify-center h-7 w-7 rounded-lg text-yellow-600 hover:text-slate-400 hover:bg-white/[0.07] transition-colors duration-150 bg-transparent border-none cursor-pointer' >
                                 <Coins size={18}/>
                             </button>
-                            <button className='flex items-center justify-center h-7 w-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.07] transition-colors duration-150 bg-transparent border-none cursor-pointer'>
+                            <button className='flex items-center justify-center h-7 w-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.07] transition-colors duration-150 bg-transparent border-none cursor-pointer'onClick={()=>{
+                                logOut();
+                                dispatch(setUserData(null))
+                            }}>
                                 <LogOut size={18}/>
                             </button>
                         </div>
